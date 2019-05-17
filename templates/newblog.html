@@ -4,9 +4,12 @@
            
     <form action="/newpost" method="post">
      <label for="title">Title:</label>
-     <input id="title" type="text" name="title" /><br><br>
+     <input id="title" type="text" name="title" />
+     <span class = "error">{{title_error}}</span><br><br>
      <label for="blog">Blog Entry:</label>
-     <input id="body" type="text" name="body"/><br><br>
+     <input id="body" type="text" name="body"/>
+     <span class = "error">{{body_error}}</span><br><br>
+     
      <input type="submit" value = "blogpost" />
     </form>   
 

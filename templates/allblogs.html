@@ -2,12 +2,12 @@
 {% block content %}
      <hr>
      <h1>My Blog Posts</h1>
-    <ol>
+    <ul>
      {% for blog in stuff %}
-      <li>{{blog.title}}<br>
-        {{blog.body}}
+    <li> <a href= "/blogview">{{blog.title}}</a></li>
+        {{blog.body}}<br><br>
       </li>
      {% endfor %}
-     </ol>
+     </ul>
 
 {% endblock %}

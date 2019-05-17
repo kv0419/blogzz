@@ -20,37 +20,55 @@ class Blog(db.Model):
         self.body = body
         ##self.completed = False
 
+##@app.route('/blogview', methods = ['get',"post"])
+##def blogview():
+    #query that gets a specific blog id
+##    return render_template("blogview.html", stuff = Blog.query.all()
 
 ##TODOS
 @app.route('/blogs', methods = ['get',"post"])
 def blogs():
-    #query that gets blocktitles
-    #query that gets blogbodies
+    #query that gets blogtitles and blogbodies
     return render_template("allblogs.html", stuff = Blog.query.all()) # ?blogtitles and blogbodies?)
 
-@app.route('/newpost', methods = ['get', 'post'])
+@app.route('/newpost', methods = ['GET', 'POST'])
 def newpost():
     #using this route a NEW blog post is added to database
+    
     if request.method == 'POST':
         blog_title = request.form['title']
         blog_body = request.form['body']
-        new_blog = Blog(blog_title, blog_body)
-        db.session.add(new_blog)
-        db.session.commit()
-        return redirect('/blogs')
-    return render_template("newblog.html")
 
+        title_error =''
+        if (blog_title ==''):
+            title_error = "This is not a valid title"
+        
+        body_error =''
+        if (blog_body ==''):
+            body_error = "Try again, write a blog!!"
+
+        if title_error or body_error:
+            return render_template("newblog.html", title_error = title_error, body_error = body_error)
+        
+        else:
+        
+            new_blog = Blog(blog_title, blog_body)
+            db.session.add(new_blog)
+            db.session.commit()
+           
+            return redirect('/blogs')
+
+    return render_template("newblog.html")
 # @app.route('/blogview' methods = ['post'])
 # def blogview():
-
 #     blogtitle = query for specific title
 #     blogbody = query for specific body
+#       return render_template("blogview.html" ?blogtitle and blogbody for id#?)
 
-#     return render_template("blogview.html" ?blogtitle and blogbody for id#?)
 
-
-# @app.route('/', methods=['POST', 'GET'])
-# def index():
+@app.route('/', methods=['POST', 'GET'])
+def index():
+    return render_template('/login.html')
 
 #     if request.method == 'POST':
 #         blog_title = request.form['blogtitle']

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+     <hr>
+     <h1>A SINGLE BLOG POST</h1>
+    <ol>
+     {% for blog in stuff %}
+      <li>{{blog.id}}<br>
+        {{blog.title}}<br>
+        {{blog.body}}
+      </li>
+     {% endfor %}
+     </ol>
+
+{% endblock %}
