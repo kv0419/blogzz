@@ -20,16 +20,18 @@ class Blog(db.Model):
         self.body = body
         ##self.completed = False
 
-##@app.route('/blogview', methods = ['get',"post"])
-##def blogview():
+@app.route('/blogview', methods = ['GET',"POST"])
+def blogview():
     #query that gets a specific blog id
-##    return render_template("blogview.html", stuff = Blog.query.all()
+    ids = request.args.get('blog')
+    blog = Blog.query.get(int(ids))
+    return render_template("blogview.html",blog = blog)
 
 ##TODOS
-@app.route('/blogs', methods = ['get',"post"])
+@app.route('/blogs', methods = ['GET','POST'])
 def blogs():
     #query that gets blogtitles and blogbodies
-    return render_template("allblogs.html", stuff = Blog.query.all()) # ?blogtitles and blogbodies?)
+    return render_template("allblogs.html", stuff = Blog.query.all())
 
 @app.route('/newpost', methods = ['GET', 'POST'])
 def newpost():
@@ -55,8 +57,8 @@ def newpost():
             new_blog = Blog(blog_title, blog_body)
             db.session.add(new_blog)
             db.session.commit()
-           
-            return redirect('/blogs')
+            strid = str(new_blog.id)
+            return redirect('/blogview?blog=' + strid)
 
     return render_template("newblog.html")
 # @app.route('/blogview' methods = ['post'])

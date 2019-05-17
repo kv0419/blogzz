@@ -4,7 +4,7 @@
      <h1>My Blog Posts</h1>
     <ul>
      {% for blog in stuff %}
-    <li> <a href= "/blogview">{{blog.title}}</a></li>
+    <li> <a href= "/blogview?blog={{blog.id}}">{{blog.title}}</a></li>
         {{blog.body}}<br><br>
       </li>
      {% endfor %}
