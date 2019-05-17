@@ -13,12 +13,12 @@ class Blog(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(120))
     body = db.Column(db.String(10000))
-    ##completed = db.Column(db.Boolean)
+    
 
     def __init__(self, title, body):
         self.title = title
         self.body = body
-        ##self.completed = False
+        
 
 @app.route('/blogview', methods = ['GET',"POST"])
 def blogview():
@@ -61,27 +61,12 @@ def newpost():
             return redirect('/blogview?blog=' + strid)
 
     return render_template("newblog.html")
-# @app.route('/blogview' methods = ['post'])
-# def blogview():
-#     blogtitle = query for specific title
-#     blogbody = query for specific body
-#       return render_template("blogview.html" ?blogtitle and blogbody for id#?)
 
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
     return render_template('/login.html')
 
-#     if request.method == 'POST':
-#         blog_title = request.form['blogtitle']
-#         new_blog = Blog(blog_name)
-#         db.session.add(new_blog)
-#         db.session.commit()
-
-#     blogs = Blog.query.filter_by(completed=False).all()
-#     completed_blogs = Blog.query.filter_by(completed=True).all()
-#     return render_template('blogs.html',title="Here is the Blog!", 
-#         blogs=blogs, completed_blogs=completed_blogs)
 
 
 if __name__ == '__main__':
