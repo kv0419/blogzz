@@ -2,12 +2,11 @@ from flask import Flask, request, redirect, render_template, session
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-#app.config['DEBUG'] = True
+app.config['DEBUG'] = True
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://blogzz:beproductive@localhost:8889/blogzz'
 app.config['SQLALCHEMY_ECHO'] = True
 db = SQLAlchemy(app)
 app.secret_key = 'y337kGcys&zP3B'
-
 
 class Blog(db.Model):
 
@@ -23,15 +22,14 @@ class Blog(db.Model):
 
 class User(db.Model):
 
-        id = db.Column(db.Integer,primary_key = True)        
-        username = db.Column(db.String(120),unique = True)
-        password = db.Column(db.String(200))
-        blogs = db.relationship('Blog',backref = 'owner')
+    id = db.Column(db.Integer,primary_key = True)        
+    username = db.Column(db.String(120),unique = True)
+    password = db.Column(db.String(200))
+    blogs = db.relationship('Blog',backref = 'owner')
 
-        def __init__(self, username, password, blogs):
-            self.username = username
-            self.password = password
-            self.blogs = blogs
+    def __init__(self, username, password):
+        self.username = username
+        self.password = password
 
 @app.before_request
 def require_login():
@@ -51,6 +49,7 @@ def login():
             return redirect('/newpost')
         else:
             flash('Password incorrect or Username does not exist','error')
+
     return render_template('login.html')
 
 @app.route('/signup', methods = ['GET','POST'])
@@ -60,22 +59,16 @@ def signup():
         password = request.form['password']
         verify = request.form['verify']
         
-        # if verify != password:
-        #     verify_error = "these passwords do not match"
-        #     return render_template(signup.html, verify_error = verify_error)
-        # 
-        # else:
-        
         existing_user = User.query.filter_by(username=username).first()
         if not existing_user:
-            new_user = User (username, password)
+            new_user = User(username, password)
             db.session.add(new_user)
             db.session.commit()
-            session['username'] = Username
+            session['username'] = username
             return redirect ('/newpost')
         else:
-            ## some responses here
             return "<h1> This User already exists, try another!<h1>"
+
     return render_template('signup.html')
 
 
