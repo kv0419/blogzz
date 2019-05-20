@@ -33,7 +33,7 @@ class User(db.Model):
 
 @app.before_request
 def require_login():
-    allowed_routes = ['login','signup']
+    allowed_routes = ['login','signup','blogs']
     if request.endpoint not in allowed_routes and 'username' not in session:
         return redirect('/login')
 
@@ -98,7 +98,7 @@ def newpost():
     if request.method == 'POST':
         blog_title = request.form['title']
         blog_body = request.form['body']
-        blog_owner = User.query.filter_by()
+        blog_owner = User.query.filter_by(owner=owner).all()
 
         title_error =''
         if (blog_title ==''):
@@ -120,7 +120,6 @@ def newpost():
             return redirect('/blogview?blog=' + strid)
 
     return render_template("newblog.html")
-
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
