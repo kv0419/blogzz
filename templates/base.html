@@ -3,16 +3,28 @@
     <head>
         <title>Build-A-Blog</title>
         <style type = "text/css">
-            .error {
-                color:red;
-                }
+            .error {color:red;}
+            li {text-align: center;}
         </style>
     </head>
     <body>
         <div>
-            <a href= "/blogs">Main Page</a>
-            <a href="/newpost">New Blogpost</a>
+            <ul>
+                <li><a href="/blogs">Main Page</a>
+                <li><a href="/newpost">New Blogpost</a>
+                <li><a href="/signup">Create Account</a>
+                <li><a href="/login">Login</a>
+                <li><a href="/logout">Logout</a>
+            </ul>
         </div>
+        {% with messages = get_flashed_messages(with_categories=True) %}
+            <ul>
+            {% for category, message in messages %}
+                <li class = "{{category}}">{{message}}</li>
+            {% endfor %}
+            </ul>
+        {% endwith %}
+        
         <hr>
         {% block content %}
         {% endblock %}

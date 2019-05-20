@@ -2,24 +2,17 @@
 {% block content %}
      <hr><br>
 
-     <h1>This is a LOGIN PAGE with actual features coming soon!!</h1>
+     <h1>Please login:</h1>
       
    <br><br>
         <form action="/allblogs" method="post">
         <label for="username">Username:</label>
-        <input id="username" type="text" name="title" /><br><br>
-        <label for="password">Password:</label>
-        <input id="body" type="password" name="password"/><br><br>
+        <input id="username" type="text" name="username" /><br><br>
+
+        <label for="password">Password:</label>        
+        <input id="password" type="password" name="password"/><br><br>
+        
         <input type="submit" value = "login" />
         </form> 
 
-     <!-- You will not be
-    <ol>
-             {% for people in User %}
-      <li>{{people.name}}<br>
-        {{people.passwd}}
-      </li>
-     {% endfor %}
-     </ol>
-     to see this text. -->
 {% endblock %}
