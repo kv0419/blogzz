@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
      <hr>
-     <h1>A SINGLE BLOG POST</h1><br>
-     <h2><u>{{blog.title}}</u></h2><br}<br>
-     <h2> {{blog.body}}</h2><br}<br>
+     <h1>A single blogpost</h1>
+     <h1>Written by: {{blog.owner.username}}</h1><br>
+     <h2><u>{{blog.title}}</u></h2><br><br>
+     <h2> {{blog.body}}</h2><br><br>
      </ol>
 
 {% endblock %}

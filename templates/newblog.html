@@ -1,7 +1,10 @@
 
 {% extends "base.html" %}
 {% block content %}
-           
+<hr>
+<h1>Compose your blogpost here:</h1><br>
+
+
     <form action="/newpost" method="post">
      <label for="title">Title:</label>
      <input id="title" type="text" name="title" />
@@ -11,7 +14,7 @@
      <input id="body" type="text" name="body"/>
      <span class = "error">{{body_error}}</span><br><br>
      
-     <input type="submit" value = "blogpost" />
+     <input type="submit" value = "Submit your blog!" />
     </form>   
 
 {% endblock %}    

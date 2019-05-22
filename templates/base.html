@@ -1,20 +1,25 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Build-A-Blog</title>
+        <title>Blogzzz</title>
         <style type = "text/css">
             .error {color:red;}
-            li {text-align: center;}
+            li {text-align: right;}
+            h1 {text-align: center}
         </style>
     </head>
     <body>
         <div>
             <ul>
                 <li><a href="/blogs">Main Page</a>
+                {% if "username" in session %}
                 <li><a href="/newpost">New Blogpost</a>
+                <li><a href="/logout">Logout</a>
+                    {% else %}
                 <li><a href="/signup">Create Account</a>
                 <li><a href="/login">Login</a>
-                <li><a href="/logout">Logout</a>
+                    {% endif %}
+                                  
             </ul>
         </div>
         {% with messages = get_flashed_messages(with_categories=True) %}

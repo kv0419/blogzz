@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
      <hr>
-     <h1>My Blog Posts</h1>
+     <h1>Posts for many blogzz</h1>
     <ul>
      {% for blog in stuff %}
     <li> <a href= "/blogview?blog={{blog.id}}">{{blog.title}}</a></li>
-        {{blog.body}}<br><br>
-      </li>
+    <li> <a href= "/viewbyauthor?user={{blog.owner.id}}">Written by: {{blog.owner.username}}</a></li>
+    <li>{{blog.body}}</li><br><br><br>
+    </li>
      {% endfor %}
      </ul>
-
 
 {% endblock %}

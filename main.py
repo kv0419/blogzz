@@ -1,4 +1,4 @@
-from flask import Flask, request, redirect, render_template, session
+from flask import Flask, request, redirect, render_template, session, flash
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -43,9 +43,10 @@ def login():
         username = request.form['username']
         password = request.form['password']
         user = User.query.filter_by(username=username).first()
+
         if user and user.password == password:
             session['username'] = username
-            flash('Logged In')
+            flash(' Logged In','error')
             return redirect('/newpost')
         else:
             flash('Password incorrect or Username does not exist','error')
@@ -58,17 +59,28 @@ def signup():
         username = request.form['username']
         password = request.form['password']
         verify = request.form['verify']
-        
+
+        username_error =''
+        verify_error =''
+
+        if verify !=password:
+            verify_error = "These passwords do not match"
+    
         existing_user = User.query.filter_by(username=username).first()
-        if not existing_user:
+
+        if existing_user:
+            username_error = "This person already exists"
+        
+        if verify_error or username_error:
+            return render_template("signup.html", verify_error = verify_error, username_error = username_error)
+        
+        else:
             new_user = User(username, password)
             db.session.add(new_user)
             db.session.commit()
             session['username'] = username
             return redirect ('/newpost')
-        else:
-            return "<h1> This User already exists, try another!<h1>"
-
+        
     return render_template('signup.html')
 
 
@@ -77,6 +89,14 @@ def logout():
     del session['username']
     return redirect('/')
 
+
+@app.route('/viewbyauthor', methods = ['GET',"POST"])
+def viewbyauthor():
+    #query that gets a users blogs
+    idx = request.args.get('user')
+    user = User.query.get(int(idx))
+    stuff = Blog.query.filter_by(owner = user).all()
+    return render_template("viewbyauthor.html", user = user, stuff = stuff)
 
 @app.route('/blogview', methods = ['GET',"POST"])
 def blogview():
@@ -98,8 +118,8 @@ def newpost():
     if request.method == 'POST':
         blog_title = request.form['title']
         blog_body = request.form['body']
-        blog_owner = User.query.filter_by(owner=owner).all()
-
+#        blog_owner = User.query.filter_by(owner=owner).all()
+        blog_owner = User.query.filter_by(username=session['username']).first()
         title_error =''
         if (blog_title ==''):
             title_error = "This is not a valid title"
